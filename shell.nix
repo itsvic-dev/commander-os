@@ -1,9 +1,12 @@
 # Simple shell that exposes the QEMU VM
 let
     mkShell = (import <nixpkgs> {}).pkgs.mkShell;
-    qemuRun = (import ./.).distro.qemuRun;
+    commander = import ./.;
 in
 mkShell {
     build = "commander-qemu-shell";
-    buildInputs = [ qemuRun ];
+    buildInputs = [ commander.distro.qemuRun ];
+    shellHook = ''
+        export LIMINE_INC=${commander.pkgs.limine}/include
+    '';
 }

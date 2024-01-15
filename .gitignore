@@ -1,1 +1,4 @@
 result
+compile_commands.json
+.cache/
+builddir/
