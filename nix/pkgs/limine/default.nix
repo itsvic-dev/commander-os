@@ -15,5 +15,5 @@ pkgs.stdenv.mkDerivation rec {
         "--enable-uefi-x86-64"
     ];
 
-    buildInputs = with pkgs; [ nasm ];
+    nativeBuildInputs = with pkgs; [ nasm ];
 }
