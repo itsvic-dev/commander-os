@@ -5,7 +5,7 @@ in
 stdenv.mkDerivation {
     name = "kernel";
     version = "latest";
-    src = repoRoot + "/components/kernel";
+    src = repoRoot + "/kernel";
 
     nativeBuildInputs = with nixpkgs.pkgs; [
         meson ninja
