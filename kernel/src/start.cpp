@@ -1,6 +1,7 @@
 #include "drivers/fb/liminefb.h"
 #include "drivers/tty/flantermtty.h"
 #include "hal/basic.h"
+#include "logging.h"
 #include <cstddef>
 #include <cstdint>
 #include <limine.h>
@@ -29,10 +30,12 @@ extern "C" void _start(void) {
   Drivers::LimineFB fb(fbRequest.response->framebuffers[0]);
   Drivers::FlantermTTY tty(&fb);
 
-  const char *hi = "Hello, world!\n";
-  while (*hi) {
-    tty.putchar(*hi++);
-  }
+  Logger::setTTY(&tty);
+  Logger logger("start");
+  logger.debug("Hello, world!");
+  logger.info("Hello, world!");
+  logger.warn("Hello, world!");
+  logger.error("Hello, world!");
 
   // we're done for now
   HAL::halt();

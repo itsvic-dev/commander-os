@@ -50,6 +50,7 @@ exe = executable(
   'src/start.cpp',
   'src/basic.cpp',
   'src/cppglue.cpp',
+  'src/logging.cpp',
 
   'src/drivers/fb/liminefb.cpp',
 
