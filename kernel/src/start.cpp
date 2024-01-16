@@ -32,10 +32,7 @@ extern "C" void _start(void) {
 
   Logger::setTTY(&tty);
   Logger logger("start");
-  logger.debug("Hello, world!");
   logger.info("Hello, world!");
-  logger.warn("Hello, world!");
-  logger.error("Hello, world!");
 
   // we're done for now
   HAL::halt();
