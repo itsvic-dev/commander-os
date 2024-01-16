@@ -1,4 +1,5 @@
 #include "drivers/fb/liminefb.h"
+#include "drivers/tty/flantermtty.h"
 #include "hal/basic.h"
 #include <cstddef>
 #include <cstdint>
@@ -26,12 +27,11 @@ extern "C" void _start(void) {
 
   // TODO: should be dynamic once we have MM
   Drivers::LimineFB fb(fbRequest.response->framebuffers[0]);
+  Drivers::FlantermTTY tty(&fb);
 
-  // test: draw a 200x100 rectangle as a sanity test
-  for (int y = 0; y < 100; y++) {
-    for (int x = 0; x < 200; x++) {
-      fb.setPixel(x, y, 0xFFFFFF);
-    }
+  const char *hi = "Hello, world!\n";
+  while (*hi) {
+    tty.putchar(*hi++);
   }
 
   // we're done for now

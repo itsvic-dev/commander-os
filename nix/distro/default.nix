@@ -34,7 +34,7 @@ rec {
             #!${nixpkgs.pkgs.runtimeShell}
 
             exec ${qemu} -cpu max -drive file=${nixpkgs.pkgs.OVMF.fd}/FV/OVMF.fd,if=pflash,readonly=on \
-                -drive file=${bootImage}/boot.img,if=virtio,readonly=on
+                -drive file=${bootImage}/boot.img,if=virtio,readonly=on -m 256M
         '';
     in nixpkgs.pkgs.runCommand "commander-vm" {} ''
         mkdir -p $out/bin

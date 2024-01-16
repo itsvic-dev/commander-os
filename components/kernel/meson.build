@@ -20,6 +20,20 @@ add_global_arguments(
   language: 'cpp'
 )
 
+add_global_arguments(
+  '-ffreestanding',
+  '-fno-stack-protector',
+  '-fno-stack-check',
+  '-fno-lto',
+  '-m64',
+  '-march=x86-64',
+  '-mno-80387',
+  '-mno-mmx',
+  '-mno-sse',
+  '-mno-sse2',
+  language: 'c'
+)
+
 limine_inc = include_directories(get_option('limine_inc'))
 limine_dep = declare_dependency(
   include_directories: limine_inc,
@@ -27,6 +41,8 @@ limine_dep = declare_dependency(
 
 hal_proj = subproject('hal-' + host_machine.cpu())
 hal_dep = hal_proj.get_variable('hal_dep')
+
+flanterm_dep = subproject('flanterm').get_variable('flanterm_dep')
 
 exe = executable(
   'kernel',
@@ -37,7 +53,13 @@ exe = executable(
 
   'src/drivers/fb/liminefb.cpp',
 
-  dependencies: [limine_dep, hal_dep],
+  'src/drivers/tty/flantermtty.cpp',
+
+  dependencies: [
+    limine_dep,
+    hal_dep,
+    flanterm_dep,
+  ],
 
   link_args: [
     '-T' + meson.source_root() / 'linker.ld',

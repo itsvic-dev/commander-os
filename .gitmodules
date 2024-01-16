@@ -1,0 +1,3 @@
+[submodule "components/kernel/subprojects/flanterm/src"]
+	path = components/kernel/subprojects/flanterm/src
+	url = https://github.com/mintsuki/flanterm.git

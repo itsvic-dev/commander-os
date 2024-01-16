@@ -2,19 +2,12 @@
 
 **Commander** is (meant to be) a toy operating system written from scratch.
 
-## General idea
+## Running
 
-- lets the user do anything
+Run `nix-shell --run run-commander-vm`. This will build and start a very light Commander OS VM for development purposes.
 
-## Design goals
+## Building
 
-- preemptive scheduling
-- monolithic with loadable modules
-- everything in ring 0
-- (ideally) architecture independence
+To build the EFI FAT image, run `nix-build -A distro.bootImage` in the root of the repo. You'll find the built image in `result/boot.img`.
 
-## Build systems
-
-Individual components (kernel, apps) are built with Meson.
-
-To build the Commander OS distribution (bootloader, initrd, rootfs), we use the Nix package manager.
+To build the kernel, run `nix-build -A pkgs.kernel`. You'll find the built kernel in `result/bin/kernel`. To run it, use the Limine bootloader.
