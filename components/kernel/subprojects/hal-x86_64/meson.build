@@ -1,7 +1,7 @@
 project(
   'hal-x86_64', 'cpp',
   version: '0.1',
-  default_options: ['warning_level=3']
+  default_options: ['warning_level=3', 'cpp_std=c++20']
 )
 
 hal_common_proj = subproject('hal-common')

@@ -1,3 +1,4 @@
+#include "drivers/fb/liminefb.h"
 #include "hal/basic.h"
 #include <cstddef>
 #include <cstdint>
@@ -8,34 +9,31 @@
 // See specification for further info.
 LIMINE_BASE_REVISION(1)
 
-struct limine_framebuffer_request framebuffer_request = {
-    LIMINE_FRAMEBUFFER_REQUEST,
-    0,
-    nullptr,
+struct limine_framebuffer_request fbRequest = {
+    .id = LIMINE_FRAMEBUFFER_REQUEST,
+    .revision = 0,
 };
 
 extern "C" void _start(void) {
-  // Ensure the bootloader actually understands our base revision (see spec).
+  // Ensure the bootloader actually understands our base revision.
   if (LIMINE_BASE_REVISION_SUPPORTED == false) {
     HAL::halt();
   }
 
-  // Ensure we got a framebuffer.
-  if (framebuffer_request.response == NULL ||
-      framebuffer_request.response->framebuffer_count < 1) {
+  if (fbRequest.response == NULL || fbRequest.response->framebuffer_count < 1) {
     HAL::halt();
   }
 
-  // Fetch the first framebuffer.
-  struct limine_framebuffer *framebuffer =
-      framebuffer_request.response->framebuffers[0];
+  // TODO: should be dynamic once we have MM
+  Drivers::LimineFB fb(fbRequest.response->framebuffers[0]);
 
-  // Note: we assume the framebuffer model is RGB with 32-bit pixels.
-  for (size_t i = 0; i < 100; i++) {
-    uint32_t *fb_ptr = (uint32_t *)framebuffer->address;
-    fb_ptr[i * (framebuffer->pitch / 4) + i] = 0xffffff;
+  // test: draw a 200x100 rectangle as a sanity test
+  for (int y = 0; y < 100; y++) {
+    for (int x = 0; x < 200; x++) {
+      fb.setPixel(x, y, 0xFFFFFF);
+    }
   }
 
-  // We're done, just hang...
+  // we're done for now
   HAL::halt();
 }

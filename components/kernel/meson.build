@@ -1,7 +1,7 @@
 project(
   'kernel', 'cpp',
   version: '0.1',
-  default_options: ['warning_level=3']
+  default_options: ['warning_level=3', 'cpp_std=c++20']
 )
 
 # kernel building setup
@@ -10,6 +10,13 @@ add_global_arguments(
   '-fno-stack-protector',
   '-fno-stack-check',
   '-fno-lto',
+  '-fno-rtti',
+  '-m64',
+  '-march=x86-64',
+  '-mno-80387',
+  '-mno-mmx',
+  '-mno-sse',
+  '-mno-sse2',
   language: 'cpp'
 )
 
@@ -26,6 +33,9 @@ exe = executable(
   
   'src/start.cpp',
   'src/basic.cpp',
+  'src/cppglue.cpp',
+
+  'src/drivers/fb/liminefb.cpp',
 
   dependencies: [limine_dep, hal_dep],
 

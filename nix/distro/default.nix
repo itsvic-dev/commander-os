@@ -7,7 +7,7 @@ rec {
         bootx64 = "${pkgs.limine}/share/limine/BOOTX64.EFI";
         # limine config
         limineCfg = nixpkgs.pkgs.writeText "limine.cfg" ''
-            TIMEOUT=3
+            TIMEOUT=1
 
             :Commander OS
                 PROTOCOL=limine
